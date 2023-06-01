@@ -1,0 +1,1005 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1423</width>
+    <height>676</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>OOP2 Lab Final Assignment - Ali Gunes</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <widget class="QGroupBox" name="sourceImage_groupBox">
+      <property name="statusTip">
+       <string>Source is presented here</string>
+      </property>
+      <property name="title">
+       <string>Source Image</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="sourceImageViewer">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap>../../../../../../horse.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QGroupBox" name="outputImage_groupBox">
+      <property name="statusTip">
+       <string>Output is presented here</string>
+      </property>
+      <property name="title">
+       <string>Output Image</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="0" column="1">
+        <widget class="QLabel" name="outputImageViewer">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap>../../../../../../coffee.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1423</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_File">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <widget class="QMenu" name="menuExport_As">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="statusTip">
+      <string>Choose your export type</string>
+     </property>
+     <property name="title">
+      <string>Export As...</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>resources/icons/exportMenu.svg</normaloff>resources/icons/exportMenu.svg</iconset>
+     </property>
+     <addaction name="actionExport_Source"/>
+     <addaction name="actionExport_Output"/>
+    </widget>
+    <addaction name="actionOpen_Source"/>
+    <addaction name="separator"/>
+    <addaction name="actionSave_Output"/>
+    <addaction name="actionSave_Output_As"/>
+    <addaction name="menuExport_As"/>
+    <addaction name="separator"/>
+    <addaction name="actionPreferences"/>
+    <addaction name="actionAbout"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menu_Edit">
+    <property name="title">
+     <string>&amp;Edit</string>
+    </property>
+    <widget class="QMenu" name="menuClear">
+     <property name="statusTip">
+      <string>Clear the...</string>
+     </property>
+     <property name="title">
+      <string>Clear</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>resources/icons/clear.svg</normaloff>resources/icons/clear.svg</iconset>
+     </property>
+     <addaction name="actionClear_Source"/>
+     <addaction name="actionClear_Output"/>
+    </widget>
+    <addaction name="menuClear"/>
+    <addaction name="separator"/>
+    <addaction name="actionUndo_Output"/>
+    <addaction name="actionRedo_Output"/>
+   </widget>
+   <widget class="QMenu" name="menu_Conversion">
+    <property name="title">
+     <string>&amp;Conversion</string>
+    </property>
+    <addaction name="actionRGB_to_Grayscale"/>
+    <addaction name="actionRGB_to_HSV"/>
+   </widget>
+   <widget class="QMenu" name="menu_Segmentation">
+    <property name="title">
+     <string>&amp;Segmentation</string>
+    </property>
+    <addaction name="actionMulti_Otsu_Thresholding"/>
+    <addaction name="actionChan_Vese_Segmentation"/>
+    <addaction name="actionMorphological_Snakes"/>
+   </widget>
+   <widget class="QMenu" name="menu_Edge_Detection">
+    <property name="title">
+     <string>Edge &amp;Detection</string>
+    </property>
+    <addaction name="actionRoberts"/>
+    <addaction name="actionSobel"/>
+    <addaction name="actionScharr"/>
+    <addaction name="actionPrewitt"/>
+   </widget>
+   <addaction name="menu_File"/>
+   <addaction name="menu_Edit"/>
+   <addaction name="menu_Conversion"/>
+   <addaction name="menu_Segmentation"/>
+   <addaction name="menu_Edge_Detection"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QDockWidget" name="manipulationDynamicIsland">
+   <property name="maximumSize">
+    <size>
+     <width>524287</width>
+     <height>524287</height>
+    </size>
+   </property>
+   <property name="statusTip">
+    <string>A dynamic island containing all the manipulation buttons</string>
+   </property>
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::BottomDockWidgetArea|Qt::TopDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>Manipulation Island</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="dynamicIslandContents">
+    <layout class="QGridLayout" name="gridLayout_3">
+     <item row="0" column="0">
+      <widget class="QSplitter" name="splitter">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <widget class="QGroupBox" name="Conversion_groupBox">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="title">
+         <string>Conversion</string>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QPushButton" name="rgbToGrayscale_pushButton">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="statusTip">
+            <string>Convert source RGB to Grayscale</string>
+           </property>
+           <property name="text">
+            <string>RGB to Grayscale</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="rgbToHSV_pushButton">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="statusTip">
+            <string>Convert source RGB to HSV</string>
+           </property>
+           <property name="text">
+            <string>RGB to HSV</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QGroupBox" name="Segmentation_groupBox">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="title">
+         <string>Segmentation</string>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QPushButton" name="morphological_pushButton">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="statusTip">
+            <string>Apply Multi-Otsu Thresholding to source</string>
+           </property>
+           <property name="text">
+            <string>Multi-Otsu</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="chanVese_pushButton">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="statusTip">
+            <string>Apply Chan-Vese Thresholding to source</string>
+           </property>
+           <property name="text">
+            <string>Chan-Vese</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="multiOtsu_pushButton">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="statusTip">
+            <string>Apply Morphological Thresholding to source</string>
+           </property>
+           <property name="text">
+            <string>Morphological</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QGroupBox" name="EdgeDetection_groupBox">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="title">
+         <string>Edge Detection</string>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QPushButton" name="prewitt_pushButton">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="statusTip">
+            <string>Apply Prewitt Edge Detection to source</string>
+           </property>
+           <property name="text">
+            <string>Prewitt</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="scharr_pushButton">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="statusTip">
+            <string>Apply Scharr Edge Detection to source</string>
+           </property>
+           <property name="text">
+            <string>Scharr</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="sobel_pushButton">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="statusTip">
+            <string>Apply Sobel Edge Detection to source</string>
+           </property>
+           <property name="text">
+            <string>Sobel</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="roberts_pushButton">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="statusTip">
+            <string>Apply Roberts Edge Detection to source</string>
+           </property>
+           <property name="text">
+            <string>Roberts</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="controlsDynamicIsland">
+   <property name="minimumSize">
+    <size>
+     <width>75</width>
+     <height>513</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>524287</width>
+     <height>524287</height>
+    </size>
+   </property>
+   <property name="statusTip">
+    <string>A dynamic island containing all the control buttons</string>
+   </property>
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>Controls</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents">
+    <layout class="QGridLayout" name="gridLayout_5">
+     <item row="0" column="0">
+      <widget class="QGroupBox" name="Source_groupBox">
+       <property name="title">
+        <string>Source</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QPushButton" name="openSource_pushButton">
+          <property name="statusTip">
+           <string>Open a source file</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>resources/icons/openSource.svg</normaloff>resources/icons/openSource.svg</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="exportSource_pushButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="statusTip">
+           <string>Export the source</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>resources/icons/exportMenu.svg</normaloff>resources/icons/exportMenu.svg</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="clearSource_pushButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="statusTip">
+           <string>Clear the source</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>resources/icons/clear.svg</normaloff>resources/icons/clear.svg</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QGroupBox" name="Output_groupBox">
+       <property name="title">
+        <string>Output</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QPushButton" name="save_pushButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="statusTip">
+           <string>Save the output</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>resources/icons/save.svg</normaloff>resources/icons/save.svg</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="saveAs_pushButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="statusTip">
+           <string>Save the output as...</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>resources/icons/saveAs.svg</normaloff>resources/icons/saveAs.svg</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="exportOutput_pushButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="statusTip">
+           <string>Export the output</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>resources/icons/exportMenu.svg</normaloff>resources/icons/exportMenu.svg</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QGroupBox" name="Edit_groupBox">
+       <property name="title">
+        <string>Edit</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QPushButton" name="undoOutput_pushButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="statusTip">
+           <string>Undo the output</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>resources/icons/undoOutput.svg</normaloff>resources/icons/undoOutput.svg</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="redoOutput_pushButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="statusTip">
+           <string>Redo the output</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>resources/icons/redoOutput.svg</normaloff>resources/icons/redoOutput.svg</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="clearOutput_pushButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="statusTip">
+           <string>Clear the output</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>resources/icons/clear.svg</normaloff>resources/icons/clear.svg</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <action name="actionOpen_Source">
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/openSource.svg</normaloff>resources/icons/openSource.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Open Source</string>
+   </property>
+   <property name="statusTip">
+    <string>Open a source file</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionSave_Output">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/save.svg</normaloff>resources/icons/save.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Save Output</string>
+   </property>
+   <property name="statusTip">
+    <string>Save the output</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionSave_Output_As">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/saveAs.svg</normaloff>resources/icons/saveAs.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Save Output As...</string>
+   </property>
+   <property name="statusTip">
+    <string>Save the output as...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/exit.svg</normaloff>resources/icons/exit.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Exit</string>
+   </property>
+   <property name="statusTip">
+    <string>Exit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionPreferences">
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/preferences.svg</normaloff>resources/icons/preferences.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Preferences</string>
+   </property>
+   <property name="statusTip">
+    <string>Open the user preferences</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+P</string>
+   </property>
+  </action>
+  <action name="actionExport_Source">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/exportSource.svg</normaloff>resources/icons/exportSource.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Source</string>
+   </property>
+   <property name="statusTip">
+    <string>Export the source</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+S</string>
+   </property>
+  </action>
+  <action name="actionExport_Output">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/exportOutput.svg</normaloff>resources/icons/exportOutput.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Output</string>
+   </property>
+   <property name="statusTip">
+    <string>Export the output</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+O</string>
+   </property>
+  </action>
+  <action name="actionClear_Source">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/exportSource.svg</normaloff>resources/icons/exportSource.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Source</string>
+   </property>
+   <property name="statusTip">
+    <string>Clear the source</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
+   </property>
+  </action>
+  <action name="actionClear_Output">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/exportOutput.svg</normaloff>resources/icons/exportOutput.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Output</string>
+   </property>
+   <property name="statusTip">
+    <string>Clear the output</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+L</string>
+   </property>
+  </action>
+  <action name="actionUndo_Output">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/undoOutput.svg</normaloff>resources/icons/undoOutput.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Undo Output</string>
+   </property>
+   <property name="statusTip">
+    <string>Undo the output</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+Z</string>
+   </property>
+  </action>
+  <action name="actionRedo_Output">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/redoOutput.svg</normaloff>resources/icons/redoOutput.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Redo Output</string>
+   </property>
+   <property name="statusTip">
+    <string>Redo the output</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Y</string>
+   </property>
+  </action>
+  <action name="actionRGB_to_Grayscale">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>RGB to &amp;Grayscale</string>
+   </property>
+   <property name="statusTip">
+    <string>Convert source RGB to Grayscale</string>
+   </property>
+  </action>
+  <action name="actionRGB_to_HSV">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>RGB to &amp;HSV</string>
+   </property>
+   <property name="statusTip">
+    <string>Convert source RGB to HSV</string>
+   </property>
+  </action>
+  <action name="actionMulti_Otsu_Thresholding">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Multi-Otsu Thresholding</string>
+   </property>
+   <property name="statusTip">
+    <string>Apply Multi-Otsu Thresholding to source</string>
+   </property>
+  </action>
+  <action name="actionChan_Vese_Segmentation">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Chan-Vese Segmentation</string>
+   </property>
+   <property name="statusTip">
+    <string>Apply Chan-Vese Segmentation to source</string>
+   </property>
+  </action>
+  <action name="actionMorphological_Snakes">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>M&amp;orphological Snakes</string>
+   </property>
+   <property name="statusTip">
+    <string>Apply Morphological Snakes to source</string>
+   </property>
+  </action>
+  <action name="actionRoberts">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Roberts</string>
+   </property>
+   <property name="statusTip">
+    <string>Apply Roberts Edge Detection to source</string>
+   </property>
+  </action>
+  <action name="actionSobel">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Sobel</string>
+   </property>
+   <property name="statusTip">
+    <string>Apply Sobel Edge Detection to source</string>
+   </property>
+  </action>
+  <action name="actionScharr">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>S&amp;charr</string>
+   </property>
+   <property name="statusTip">
+    <string>Apply Scharr Edge Detection to source</string>
+   </property>
+  </action>
+  <action name="actionPrewitt">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Prewitt</string>
+   </property>
+   <property name="statusTip">
+    <string>Apply Prewitt Edge Detection to source</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="icon">
+    <iconset>
+     <normaloff>resources/icons/about.svg</normaloff>resources/icons/about.svg</iconset>
+   </property>
+   <property name="text">
+    <string>About</string>
+   </property>
+   <property name="statusTip">
+    <string>About this program...</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>actionExit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
