@@ -1,3 +1,4 @@
+# Author: Ali Gunes
 # -*- coding: utf-8 -*-
 # Form implementation generated from reading ui file 'MainUI.ui'
 #
@@ -18,7 +19,7 @@ import PreferencesUI
 import Conversion
 import Segmentation
 import EdgeDetection
-
+import LoadingUI
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -579,6 +580,7 @@ class Ui_MainWindow(object):
 
         # For Chan-Vese Segmentation
         self.chanVese_pushButton.clicked.connect(lambda: self.segmentation("chanVese"))
+
         self.actionChan_Vese_Segmentation.triggered.connect(lambda: self.segmentation("chanVese"))
 
         # For Morphological Snake Segmentation
@@ -613,6 +615,8 @@ class Ui_MainWindow(object):
         self.saveAs_pushButton.clicked.connect(lambda: self.save("saveAs"))
         self.actionSave_Output_As.triggered.connect(lambda: self.save("saveAs"))
         # endregion
+
+
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -904,6 +908,14 @@ class Ui_MainWindow(object):
                                  self.manipulationDynamicIsland)
         self.PreferencesWindow.show()
 
+    # LoadingUI actions
+    def loadingUI(self):
+        self.LoadingWindow = QtWidgets.QMainWindow()
+        self.loading = LoadingUI.Ui_LoadingWindow()
+        self.loading.setupUi(self.LoadingWindow)
+        self.LoadingWindow.show()
+
+
     # Save and Save As actions
     def save(self, saveType: str):
         if saveType == "save":
@@ -917,6 +929,7 @@ class Ui_MainWindow(object):
 
     # Conversion action calls
     def conversion(self, conversionType: str):
+
         Conversion.RGBConversions((self.fileName[0]), conversionType, self.outputImageViewer)
 
         # Enable Export As Output Menu Action and Button
@@ -943,6 +956,7 @@ class Ui_MainWindow(object):
 
     # Edge Detection action calls
     def edgeDetection(self, edgeDetectionType: str):
+
         EdgeDetection.EdgeDetection(self.fileName[0], edgeDetectionType, self.outputImageViewer)
 
         # Enable Export As Output Menu Action and Button

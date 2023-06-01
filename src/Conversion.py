@@ -1,3 +1,4 @@
+# Author: Ali Gunes
 # Contains related functionalities for RGB to Grayscale and RGB to HSV
 from PyQt5.QtGui import QPixmap
 from skimage.color import rgb2gray

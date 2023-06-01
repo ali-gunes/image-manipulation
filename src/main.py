@@ -1,3 +1,4 @@
+# Author: Ali Gunes
 import skimage as ski
 import MainUI
 """

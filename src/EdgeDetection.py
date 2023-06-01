@@ -1,3 +1,4 @@
+# Author: Ali Gunes
 # Contains related functionalities for Edge Detection
 import os
 
