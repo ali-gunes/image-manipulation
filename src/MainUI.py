@@ -875,6 +875,10 @@ class Ui_MainWindow(object):
             # Clear the previous output image
             self.clearViewers("output")
 
+            # Clear Undo/Redo History
+            undoHistory.clear()
+            redoHistory.clear()
+
     # Open a dialog box to save the source with the opposite of source file's extension (jpg -> png, png -> jpg)
     def exportViewers(self, exportType: str):
         try:
@@ -998,51 +1002,79 @@ class Ui_MainWindow(object):
 
     # Conversion action calls
     def conversion(self, conversionType: str):
-        Conversion.RGBConversions((self.fileName[0]), conversionType, self.outputImageViewer, undoHistory)
+        try:
+            Conversion.RGBConversions((self.fileName[0]), conversionType, self.outputImageViewer, undoHistory)
 
-        # Enable Export As Output Menu Action and Button
-        self.setEnabledExportEvents("output", True)
+            # Enable Export As Output Menu Action and Button
+            self.setEnabledExportEvents("output", True)
 
-        # Enable Clear Output Menu Action and Button
-        self.setEnabledClearEvents("output", True)
+            # Enable Clear Output Menu Action and Button
+            self.setEnabledClearEvents("output", True)
 
-        # Enable Save and Save As Menu Actions and Buttons
-        self.setEnabledSaveEvents(True)
+            # Enable Save and Save As Menu Actions and Buttons
+            self.setEnabledSaveEvents(True)
 
-        # Enable Undo/Redo Menu Actions and Buttons
-        self.setEnabledUndoEvents(True)
+            # Enable Undo/Redo Menu Actions and Buttons
+            self.setEnabledUndoEvents(True)
+        except Exception as ex:
+            outOfIndex_message = QMessageBox()
+            outOfIndex_message.setIcon(QMessageBox.Critical)
+            outOfIndex_message.setText(f"The image you chose for this process is not compatible: {str(ex)}.")
+            outOfIndex_message.setWindowTitle("Incompatible Source")
+            outOfIndex_message.setStandardButtons(QMessageBox.Ok)
+            outOfIndex_message.exec_()
+
+
 
     # Segmentation action calls
     def segmentation(self, segmentationType: str):
-        Segmentation.Segmentation(self.fileName[0], segmentationType, self.outputImageViewer, undoHistory)
+        try:
+            Segmentation.Segmentation(self.fileName[0], segmentationType, self.outputImageViewer, undoHistory)
 
-        # Enable Export As Output Menu Action and Button
-        self.setEnabledExportEvents("output", True)
+            # Enable Export As Output Menu Action and Button
+            self.setEnabledExportEvents("output", True)
 
-        # Enable Clear Output Menu Action and Button
-        self.setEnabledClearEvents("output", True)
+            # Enable Clear Output Menu Action and Button
+            self.setEnabledClearEvents("output", True)
 
-        # Enable Save and Save As Menu Actions and Buttons
-        self.setEnabledSaveEvents(True)
+            # Enable Save and Save As Menu Actions and Buttons
+            self.setEnabledSaveEvents(True)
 
-        # Enable Undo/Redo Menu Actions and Buttons
-        self.setEnabledUndoEvents(True)
+            # Enable Undo/Redo Menu Actions and Buttons
+            self.setEnabledUndoEvents(True)
+        except Exception as ex:
+            outOfIndex_message = QMessageBox()
+            outOfIndex_message.setIcon(QMessageBox.Critical)
+            outOfIndex_message.setText(f"The image you chose for this process is not compatible: {str(ex)}.")
+            outOfIndex_message.setWindowTitle("Incompatible Source")
+            outOfIndex_message.setStandardButtons(QMessageBox.Ok)
+            outOfIndex_message.exec_()
+
 
     # Edge Detection action calls
     def edgeDetection(self, edgeDetectionType: str):
-        EdgeDetection.EdgeDetection(self.fileName[0], edgeDetectionType, self.outputImageViewer, undoHistory)
+        try:
+            EdgeDetection.EdgeDetection(self.fileName[0], edgeDetectionType, self.outputImageViewer, undoHistory)
 
-        # Enable Export As Output Menu Action and Button
-        self.setEnabledExportEvents("output", True)
+            # Enable Export As Output Menu Action and Button
+            self.setEnabledExportEvents("output", True)
 
-        # # Enable Clear Output Menu Action and Button
-        self.setEnabledClearEvents("output", True)
+            # # Enable Clear Output Menu Action and Button
+            self.setEnabledClearEvents("output", True)
 
-        # Enable Save and Save As Menu Actions and Buttons
-        self.setEnabledSaveEvents(True)
+            # Enable Save and Save As Menu Actions and Buttons
+            self.setEnabledSaveEvents(True)
 
-        # Enable Undo/Redo Menu Actions and Buttons
-        self.setEnabledUndoEvents(True)
+            # Enable Undo/Redo Menu Actions and Buttons
+            self.setEnabledUndoEvents(True)
+        except Exception as ex:
+            outOfIndex_message = QMessageBox()
+            outOfIndex_message.setIcon(QMessageBox.Critical)
+            outOfIndex_message.setText(f"The image you chose for this process is not compatible: {str(ex)}.")
+            outOfIndex_message.setWindowTitle("Incompatible Source")
+            outOfIndex_message.setStandardButtons(QMessageBox.Ok)
+            outOfIndex_message.exec_()
+
 
 
 if __name__ == "__main__":
