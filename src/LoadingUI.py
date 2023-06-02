@@ -12,6 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QMovie
 from PyQt5.QtCore import Qt
 
+
 class Ui_LoadingWindow(object):
     def setupUi(self, LoadingWindow):
         LoadingWindow.setObjectName("LoadingWindow")
@@ -50,8 +51,7 @@ class Ui_LoadingWindow(object):
     def retranslateUi(self, LoadingWindow):
         _translate = QtCore.QCoreApplication.translate
         LoadingWindow.setWindowTitle(_translate("LoadingWindow", "LoadingWindow"))
-        self.processing_label.setText(_translate("LoadingWindow", "Processing..."))
-
+        self.processing_label.setText(_translate("LoadingWindow", "Loading..."))
 
 
 if __name__ == "__main__":
@@ -61,3 +61,10 @@ if __name__ == "__main__":
     ui.setupUi(LoadingWindow)
     LoadingWindow.show()
     sys.exit(app.exec_())
+
+app = QtWidgets.QApplication(sys.argv)
+LoadingWindow = QtWidgets.QMainWindow()
+ui = Ui_LoadingWindow()
+ui.setupUi(LoadingWindow)
+LoadingWindow.show()
+sys.exit(app.exec_())

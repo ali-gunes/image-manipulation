@@ -4,13 +4,13 @@ import os
 
 import numpy as np
 from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QMessageBox
 from skimage.color import rgb2gray
 from skimage import io
 import matplotlib.pyplot as plt
 from skimage.filters import threshold_multiotsu
 from skimage.segmentation import chan_vese, checkerboard_level_set
 from skimage.segmentation import morphological_chan_vese
-
 
 
 class Segmentation():
@@ -23,12 +23,20 @@ class Segmentation():
 
         self.fileName = "output.png" if self.sourceImage[0][-3::] == "jpg" else "output.jpg"
 
-        if segmentationType == "multiOtsu":
-            self.multiOtsuSegmentation()
-        elif segmentationType == "chanVese":
-            self.chanVeseSegmentation()
-        elif segmentationType == "morphological":
-            self.morphologicalSegmentation()
+        try:
+            if segmentationType == "multiOtsu":
+                self.multiOtsuSegmentation()
+            elif segmentationType == "chanVese":
+                self.chanVeseSegmentation()
+            elif segmentationType == "morphological":
+                self.morphologicalSegmentation()
+        except Exception as ex:
+            outOfIndex_message = QMessageBox()
+            outOfIndex_message.setIcon(QMessageBox.Critical)
+            outOfIndex_message.setText(f"The image you chose for this process is not compatible: {str(ex)}.")
+            outOfIndex_message.setWindowTitle("Incompatible Source")
+            outOfIndex_message.setStandardButtons(QMessageBox.Ok)
+            outOfIndex_message.exec_()
 
     def multiOtsuSegmentation(self):
         sourceImage = io.imread(self.sourceImage)
@@ -36,7 +44,6 @@ class Segmentation():
         grayScale = rgb2gray(sourceImage) if len(sourceImage.shape) == 3 else sourceImage
         thresholds = threshold_multiotsu(grayScale)
         self.outputImage = np.digitize(grayScale, bins=thresholds)
-
 
         self.fileName = "Multi-Otsu_" + self.fileName
 
@@ -73,7 +80,7 @@ class Segmentation():
         init_ls = checkerboard_level_set(grayScale.shape, 6)
 
         self.outputImage = morphological_chan_vese(grayScale, num_iter=35, init_level_set=init_ls,
-                                     smoothing=3)
+                                                   smoothing=3)
 
         self.fileName = "Morphological-Snake_" + self.fileName
 

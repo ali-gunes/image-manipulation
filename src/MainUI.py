@@ -12,16 +12,19 @@ import ctypes
 from PyQt5 import QtCore, QtGui, QtWidgets
 import qdarktheme
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtWidgets import QFileDialog, QMessageBox
 
 import AboutUI
 import PreferencesUI
+import LoadingUI
 import Conversion
 import Segmentation
 import EdgeDetection
-import LoadingUI
+
 undoHistory = []
 redoHistory = []
+
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -625,7 +628,6 @@ class Ui_MainWindow(object):
         self.actionRedo_Output.triggered.connect(self.redoOperations)
         # endregion
 
-
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "OOP2 Lab Final Assignment - Ali Gunes"))
@@ -843,11 +845,12 @@ class Ui_MainWindow(object):
             self.exportOutput_pushButton.setEnabled(value)
 
     # Control the Enable/Disable for Undo/Redo Events
-    def setEnabledUndoRedoEvents(self, value: bool):
+    def setEnabledUndoEvents(self, value: bool):
         # Enable/Disable Undo Menus and Buttons
         self.undoOutput_pushButton.setEnabled(value)
         self.actionUndo_Output.setEnabled(value)
 
+    def setEnabledRedoEvents(self, value: bool):
         # Enable/Disable Redo Menus and Buttons
         self.redoOutput_pushButton.setEnabled(value)
         self.actionRedo_Output.setEnabled(value)
@@ -874,13 +877,21 @@ class Ui_MainWindow(object):
 
     # Open a dialog box to save the source with the opposite of source file's extension (jpg -> png, png -> jpg)
     def exportViewers(self, exportType: str):
-        saveFormat = "PNG Files (*.png)" if self.fileName[0][-3::] == "jpg" else "JPG Files (*.jpg)"
+        try:
+            saveFormat = "PNG Files (*.png)" if self.fileName[0][-3::] == "jpg" else "JPG Files (*.jpg)"
 
-        saveName = QFileDialog.getSaveFileName(MainWindow, "Select a Location", "", saveFormat)
-        if (saveName[0] != "") and (exportType == "source"):
-            self.sourceImageViewer.pixmap().save(saveName[0])
-        elif (saveName[0] != "") and (exportType == "output"):
-            self.outputImageViewer.pixmap().save(saveName[0])
+            saveName = QFileDialog.getSaveFileName(MainWindow, "Select a Location", "", saveFormat)
+            if (saveName[0] != "") and (exportType == "source"):
+                self.sourceImageViewer.pixmap().save(saveName[0])
+            elif (saveName[0] != "") and (exportType == "output"):
+                self.outputImageViewer.pixmap().save(saveName[0])
+        except Exception:
+            outOfIndex_message = QMessageBox()
+            outOfIndex_message.setIcon(QMessageBox.Information)
+            outOfIndex_message.setText("There is nothing to export, output image is empty.")
+            outOfIndex_message.setWindowTitle("Export Action")
+            outOfIndex_message.setStandardButtons(QMessageBox.Ok)
+            outOfIndex_message.exec_()
 
     # Clear source and output when Clear Source actions are selected, clear output when Clear Output actions are selected
     def clearViewers(self, viewerType: str):
@@ -891,31 +902,30 @@ class Ui_MainWindow(object):
 
             # Disable Clear Source and Output Menu Action and Button
             self.setEnabledClearEvents("source", False)
-            self.setEnabledClearEvents("output", False)
 
             # Disable Export As Source Menu Action and Button
             self.setEnabledExportEvents("source", False)
 
-            # Disable Export As Output Menu Action and Button
-            self.setEnabledExportEvents("output", False)
-
             # Disable Conversion, Segmentation and Edge Detection Menu Actions and Buttons
             self.setEnabledFunctionEvents(False)
-
-            # Disable Save and Save As Menu Actions and Buttons
-            self.setEnabledSaveEvents(False)
 
         elif viewerType == "output":
             self.outputImageViewer.clear()
 
-            # Disable Clear Output Menu Action and Button
-            self.setEnabledClearEvents("output", False)
+        # region Events for both conditions
+        # Disable Undo/Redo Menu Actions and Buttons
+        self.setEnabledUndoEvents(False)
+        self.setEnabledRedoEvents(False)
 
-            # Disable Export As Output Menu Action and Button
-            self.setEnabledExportEvents("output", False)
+        # Disable Save and Save As Menu Actions and Buttons
+        self.setEnabledSaveEvents(False)
 
-            # Disable Save and Save As Menu Actions and Buttons
-            self.setEnabledSaveEvents(False)
+        # Disable Export As Output Menu Action and Button
+        self.setEnabledExportEvents("output", False)
+
+        # Disable Clear Output Menu Action and Button
+        self.setEnabledClearEvents("output", False)
+        # endregion
 
     # AboutUI actions
     def aboutUI(self):
@@ -939,43 +949,55 @@ class Ui_MainWindow(object):
 
     # Save and Save As actions
     def save(self, saveType: str):
-        if saveType == "save":
-            # Saves the output with the same name and extension in the same folder
-            self.outputImageViewer.pixmap().save(self.fileName[0])
-        elif saveType == "saveAs":
-            # Saves the output as
-            saveName = QFileDialog.getSaveFileName(MainWindow, "Select a Location", "",
-                                                   "PNG Files (*.png);;JPG Files (*.jpg)")
-            self.outputImageViewer.pixmap().save(saveName[0])
+        try:
+            if saveType == "save":
+                # Saves the output with the same name and extension in the same folder
+                self.outputImageViewer.pixmap().save(self.fileName[0])
+            elif saveType == "saveAs":
+                # Saves the output as
+                saveName = QFileDialog.getSaveFileName(MainWindow, "Select a Location", "",
+                                                       "PNG Files (*.png);;JPG Files (*.jpg)")
+                self.outputImageViewer.pixmap().save(saveName[0])
+        except Exception:
+            outOfIndex_message = QMessageBox()
+            outOfIndex_message.setIcon(QMessageBox.Information)
+            outOfIndex_message.setText("There is nothing to save, output image is empty.")
+            outOfIndex_message.setWindowTitle("Save Action")
+            outOfIndex_message.setStandardButtons(QMessageBox.Ok)
+            outOfIndex_message.exec_()
 
     # Undo actions
     def undoOperations(self):
-        print("undo")
+        self.setEnabledRedoEvents(True)
+
         if len(undoHistory) < 1:
-            self.undoOutput_pushButton.setEnabled(False)
-            self.actionUndo_Output.setEnabled(False)
+            self.setEnabledUndoEvents(False)
         else:
-            redoHistory.append(undoHistory.pop())
-            pixmapSample = undoHistory[-1]
-            self.outputImageViewer.setPixmap(pixmapSample)
-
-
+            try:
+                redoHistory.append(undoHistory.pop())
+                pixmapSample = undoHistory[-1]
+                self.outputImageViewer.setPixmap(pixmapSample)
+            except IndexError:
+                self.setEnabledUndoEvents(False)
+                self.outputImageViewer.clear()
 
     # Redo actions
     def redoOperations(self):
-        print("redo")
         if len(redoHistory) < 1:
-            self.redoOutput_pushButton.setEnabled(False)
-            self.actionRedo_Output.setEnabled(False)
+            self.setEnabledRedoEvents(False)
+            self.outputImageViewer.clear()
         else:
-            pixmapSample = redoHistory[-1]
-            self.outputImageViewer.setPixmap(pixmapSample)
-            redoHistory.pop()
-
+            try:
+                undoHistory.append(redoHistory[-1])
+                pixmapSample = redoHistory[-1]
+                self.outputImageViewer.setPixmap(pixmapSample)
+                redoHistory.pop()
+                self.setEnabledUndoEvents(True)
+            except IndexError:
+                self.setEnabledUndoEvents(False)
 
     # Conversion action calls
     def conversion(self, conversionType: str):
-
         Conversion.RGBConversions((self.fileName[0]), conversionType, self.outputImageViewer, undoHistory)
 
         # Enable Export As Output Menu Action and Button
@@ -988,7 +1010,7 @@ class Ui_MainWindow(object):
         self.setEnabledSaveEvents(True)
 
         # Enable Undo/Redo Menu Actions and Buttons
-        self.setEnabledUndoRedoEvents(True)
+        self.setEnabledUndoEvents(True)
 
     # Segmentation action calls
     def segmentation(self, segmentationType: str):
@@ -1004,11 +1026,10 @@ class Ui_MainWindow(object):
         self.setEnabledSaveEvents(True)
 
         # Enable Undo/Redo Menu Actions and Buttons
-        self.setEnabledUndoRedoEvents(True)
+        self.setEnabledUndoEvents(True)
 
     # Edge Detection action calls
     def edgeDetection(self, edgeDetectionType: str):
-
         EdgeDetection.EdgeDetection(self.fileName[0], edgeDetectionType, self.outputImageViewer, undoHistory)
 
         # Enable Export As Output Menu Action and Button
@@ -1021,7 +1042,7 @@ class Ui_MainWindow(object):
         self.setEnabledSaveEvents(True)
 
         # Enable Undo/Redo Menu Actions and Buttons
-        self.setEnabledUndoRedoEvents(True)
+        self.setEnabledUndoEvents(True)
 
 
 if __name__ == "__main__":

@@ -174,7 +174,6 @@ class Ui_PreferencesWindow(object):
             lambda: self.lockIslands("lockHeight", manipulationDynamicIsland))
         # endregion
 
-
     def retranslateUi(self, PreferencesWindow):
         _translate = QtCore.QCoreApplication.translate
         PreferencesWindow.setWindowTitle(_translate("PreferencesWindow", "Preferences"))
