@@ -14,10 +14,12 @@ from skimage.segmentation import morphological_chan_vese
 
 
 class Segmentation():
-    def __init__(self, sourceImage, segmentationType, outputViewer):
+    def __init__(self, sourceImage, segmentationType, outputViewer, undoHistory):
         self.outputImage = None
         self.sourceImage = sourceImage
         self.outputViewer = outputViewer
+
+        self.undoHistory = undoHistory
 
         self.fileName = "output.png" if self.sourceImage[0][-3::] == "jpg" else "output.jpg"
 
@@ -40,6 +42,9 @@ class Segmentation():
 
         plt.imsave(self.fileName, self.outputImage, cmap='jet')
         self.outputViewer.setPixmap(QPixmap(self.fileName))
+
+        self.undoHistory.append(QPixmap(self.fileName))
+
         os.remove(self.fileName)
 
     def chanVeseSegmentation(self):
@@ -55,6 +60,9 @@ class Segmentation():
 
         plt.imsave(self.fileName, self.outputImage, cmap='gray')
         self.outputViewer.setPixmap(QPixmap(self.fileName))
+
+        self.undoHistory.append(QPixmap(self.fileName))
+
         os.remove(self.fileName)
 
     def morphologicalSegmentation(self):
@@ -71,4 +79,7 @@ class Segmentation():
 
         plt.imsave(self.fileName, self.outputImage, cmap='gray')
         self.outputViewer.setPixmap(QPixmap(self.fileName))
+
+        self.undoHistory.append(QPixmap(self.fileName))
+
         os.remove(self.fileName)

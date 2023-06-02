@@ -9,10 +9,12 @@ from skimage.color import rgb2gray
 from skimage.filters import roberts, sobel, scharr, prewitt
 
 class EdgeDetection():
-    def __init__(self, sourceImage, edgeDetectionType, outputViewer):
+    def __init__(self, sourceImage, edgeDetectionType, outputViewer, undoHistory):
         self.outputImage = None
         self.sourceImage = sourceImage
         self.outputViewer = outputViewer
+
+        self.undoHistory = undoHistory
 
         self.fileName = "output.png" if self.sourceImage[0][-3::] == "jpg" else "output.jpg"
 
@@ -38,6 +40,9 @@ class EdgeDetection():
 
         plt.imsave(self.fileName, self.outputImage, cmap='gray')
         self.outputViewer.setPixmap(QPixmap(self.fileName))
+
+        self.undoHistory.append(QPixmap(self.fileName))
+
         os.remove(self.fileName)
 
 
@@ -53,6 +58,9 @@ class EdgeDetection():
 
         plt.imsave(self.fileName, self.outputImage, cmap='gray')
         self.outputViewer.setPixmap(QPixmap(self.fileName))
+
+        self.undoHistory.append(QPixmap(self.fileName))
+
         os.remove(self.fileName)
 
     def scharrEdgeDetection(self):
@@ -66,6 +74,9 @@ class EdgeDetection():
 
         plt.imsave(self.fileName, self.outputImage, cmap='gray')
         self.outputViewer.setPixmap(QPixmap(self.fileName))
+
+        self.undoHistory.append(QPixmap(self.fileName))
+
         os.remove(self.fileName)
 
     def prewittEdgeDetection(self):
@@ -79,4 +90,7 @@ class EdgeDetection():
 
         plt.imsave(self.fileName, self.outputImage, cmap='gray')
         self.outputViewer.setPixmap(QPixmap(self.fileName))
+
+        self.undoHistory.append(QPixmap(self.fileName))
+
         os.remove(self.fileName)

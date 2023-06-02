@@ -20,7 +20,8 @@ import Conversion
 import Segmentation
 import EdgeDetection
 import LoadingUI
-
+undoHistory = []
+redoHistory = []
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -616,6 +617,13 @@ class Ui_MainWindow(object):
         self.actionSave_Output_As.triggered.connect(lambda: self.save("saveAs"))
         # endregion
 
+        # region Undo - Redo Operations
+        self.undoOutput_pushButton.clicked.connect(self.undoOperations)
+        self.actionUndo_Output.triggered.connect(self.undoOperations)
+
+        self.redoOutput_pushButton.clicked.connect(self.redoOperations)
+        self.actionRedo_Output.triggered.connect(self.redoOperations)
+        # endregion
 
 
     def retranslateUi(self, MainWindow):
@@ -788,6 +796,7 @@ class Ui_MainWindow(object):
         self.actionAbout.setStatusTip(_translate("MainWindow", "About this program..."))
         self.actionAbout.setShortcut(_translate("MainWindow", "F1"))
 
+    # Control the Enable/Disable for Manipulation Functions
     def setEnabledFunctionEvents(self, value: bool):
         # Enable/Disable Conversion Menus and Buttons
         self.actionRGB_to_Grayscale.setEnabled(value)
@@ -807,6 +816,7 @@ class Ui_MainWindow(object):
         self.actionPrewitt.setEnabled(value)
         self.EdgeDetection_groupBox.setEnabled(value)
 
+    # Control the Enable/Disable for Save Events
     def setEnabledSaveEvents(self, value: bool):
         self.save_pushButton.setEnabled(value)
         self.actionSave_Output.setEnabled(value)
@@ -814,6 +824,7 @@ class Ui_MainWindow(object):
         self.saveAs_pushButton.setEnabled(value)
         self.actionSave_Output_As.setEnabled(value)
 
+    # Control the Enable/Disable for Clear Events
     def setEnabledClearEvents(self, eventType: str, value: bool):
         if eventType == "source":
             self.actionClear_Source.setEnabled(value)
@@ -822,6 +833,7 @@ class Ui_MainWindow(object):
             self.actionClear_Output.setEnabled(value)
             self.clearOutput_pushButton.setEnabled(value)
 
+    # Control the Enable/Disable for Export Events
     def setEnabledExportEvents(self, eventType: str, value: bool):
         if eventType == "source":
             self.actionExport_Source.setEnabled(value)
@@ -829,6 +841,16 @@ class Ui_MainWindow(object):
         elif eventType == "output":
             self.actionExport_Output.setEnabled(value)
             self.exportOutput_pushButton.setEnabled(value)
+
+    # Control the Enable/Disable for Undo/Redo Events
+    def setEnabledUndoRedoEvents(self, value: bool):
+        # Enable/Disable Undo Menus and Buttons
+        self.undoOutput_pushButton.setEnabled(value)
+        self.actionUndo_Output.setEnabled(value)
+
+        # Enable/Disable Redo Menus and Buttons
+        self.redoOutput_pushButton.setEnabled(value)
+        self.actionRedo_Output.setEnabled(value)
 
     # Open a dialog box with specified extensions and return the path of the selected file
     def openSource(self):
@@ -915,7 +937,6 @@ class Ui_MainWindow(object):
         self.loading.setupUi(self.LoadingWindow)
         self.LoadingWindow.show()
 
-
     # Save and Save As actions
     def save(self, saveType: str):
         if saveType == "save":
@@ -927,10 +948,35 @@ class Ui_MainWindow(object):
                                                    "PNG Files (*.png);;JPG Files (*.jpg)")
             self.outputImageViewer.pixmap().save(saveName[0])
 
+    # Undo actions
+    def undoOperations(self):
+        print("undo")
+        if len(undoHistory) < 1:
+            self.undoOutput_pushButton.setEnabled(False)
+            self.actionUndo_Output.setEnabled(False)
+        else:
+            redoHistory.append(undoHistory.pop())
+            pixmapSample = undoHistory[-1]
+            self.outputImageViewer.setPixmap(pixmapSample)
+
+
+
+    # Redo actions
+    def redoOperations(self):
+        print("redo")
+        if len(redoHistory) < 1:
+            self.redoOutput_pushButton.setEnabled(False)
+            self.actionRedo_Output.setEnabled(False)
+        else:
+            pixmapSample = redoHistory[-1]
+            self.outputImageViewer.setPixmap(pixmapSample)
+            redoHistory.pop()
+
+
     # Conversion action calls
     def conversion(self, conversionType: str):
 
-        Conversion.RGBConversions((self.fileName[0]), conversionType, self.outputImageViewer)
+        Conversion.RGBConversions((self.fileName[0]), conversionType, self.outputImageViewer, undoHistory)
 
         # Enable Export As Output Menu Action and Button
         self.setEnabledExportEvents("output", True)
@@ -940,10 +986,13 @@ class Ui_MainWindow(object):
 
         # Enable Save and Save As Menu Actions and Buttons
         self.setEnabledSaveEvents(True)
+
+        # Enable Undo/Redo Menu Actions and Buttons
+        self.setEnabledUndoRedoEvents(True)
 
     # Segmentation action calls
     def segmentation(self, segmentationType: str):
-        Segmentation.Segmentation(self.fileName[0], segmentationType, self.outputImageViewer)
+        Segmentation.Segmentation(self.fileName[0], segmentationType, self.outputImageViewer, undoHistory)
 
         # Enable Export As Output Menu Action and Button
         self.setEnabledExportEvents("output", True)
@@ -953,11 +1002,14 @@ class Ui_MainWindow(object):
 
         # Enable Save and Save As Menu Actions and Buttons
         self.setEnabledSaveEvents(True)
+
+        # Enable Undo/Redo Menu Actions and Buttons
+        self.setEnabledUndoRedoEvents(True)
 
     # Edge Detection action calls
     def edgeDetection(self, edgeDetectionType: str):
 
-        EdgeDetection.EdgeDetection(self.fileName[0], edgeDetectionType, self.outputImageViewer)
+        EdgeDetection.EdgeDetection(self.fileName[0], edgeDetectionType, self.outputImageViewer, undoHistory)
 
         # Enable Export As Output Menu Action and Button
         self.setEnabledExportEvents("output", True)
@@ -967,6 +1019,9 @@ class Ui_MainWindow(object):
 
         # Enable Save and Save As Menu Actions and Buttons
         self.setEnabledSaveEvents(True)
+
+        # Enable Undo/Redo Menu Actions and Buttons
+        self.setEnabledUndoRedoEvents(True)
 
 
 if __name__ == "__main__":

@@ -5,13 +5,15 @@ from skimage.color import rgb2gray
 from skimage import io
 import matplotlib.pyplot as plt
 import os
-
 from skimage.color import rgb2hsv
+
 class RGBConversions():
-    def __init__(self, sourceImage, conversionType, outputViewer):
+    def __init__(self, sourceImage, conversionType, outputViewer, undoHistory):
         self.outputImage = None
         self.sourceImage = sourceImage
         self.outputViewer = outputViewer
+
+        self.undoHistory = undoHistory
 
         self.fileName = "output.png" if self.sourceImage[0][-3::] == "jpg" else "output.jpg"
 
@@ -26,6 +28,9 @@ class RGBConversions():
 
         plt.imsave(self.fileName, self.outputImage, cmap=plt.cm.gray)
         self.outputViewer.setPixmap(QPixmap(self.fileName))
+
+        self.undoHistory.append(QPixmap(self.fileName))
+
         os.remove(self.fileName)
 
     def rgbToHsv(self):
@@ -45,5 +50,8 @@ class RGBConversions():
 
         plt.imsave(self.fileName, self.outputImage)
         self.outputViewer.setPixmap(QPixmap(self.fileName))
+
+        self.undoHistory.append(QPixmap(self.fileName))
+
         os.remove(self.fileName)
 
