@@ -62,9 +62,3 @@ if __name__ == "__main__":
     LoadingWindow.show()
     sys.exit(app.exec_())
 
-app = QtWidgets.QApplication(sys.argv)
-LoadingWindow = QtWidgets.QMainWindow()
-ui = Ui_LoadingWindow()
-ui.setupUi(LoadingWindow)
-LoadingWindow.show()
-sys.exit(app.exec_())

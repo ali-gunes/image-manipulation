@@ -956,7 +956,15 @@ class Ui_MainWindow(object):
         try:
             if saveType == "save":
                 # Saves the output with the same name and extension in the same folder
-                self.outputImageViewer.pixmap().save(self.fileName[0])
+                outOfIndex_message = QMessageBox()
+                outOfIndex_message.setIcon(QMessageBox.Question)
+                outOfIndex_message.setText(f"You are about to overwrite the source file with the output. Are you sure to continue?")
+                outOfIndex_message.setWindowTitle("Image Manipulation")
+                outOfIndex_message.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+                returnValue = outOfIndex_message.exec_()
+                if returnValue == QMessageBox.Yes:
+                    self.outputImageViewer.pixmap().save(self.fileName[0])
+
             elif saveType == "saveAs":
                 # Saves the output as
                 saveName = QFileDialog.getSaveFileName(MainWindow, "Select a Location", "",
