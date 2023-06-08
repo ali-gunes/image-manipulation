@@ -48,7 +48,7 @@ These preferences can be changed anytime and however the user wants. Any changes
 ---
 
 ### Functionalities
-You can choose any image with the extensions __'.jpg'__ or __'.png'__ by clicking __"Open Source"__ button or menu action. Your image will be shown in the __"Source Image"__ groupbox. After choosing an image your __"Conversion, Segmentation and Edge Detection"__ buttons and menu actions will be enabled. You can choose any operation to apply to your source image.
+You can choose any image with the extensions __'.jpg'__ or __'.png'__ by clicking __"Open Source"__ button or menu action. Your image will be shown in the __"Source Image"__ groupbox. After choosing an image, your __"Conversion, Segmentation and Edge Detection"__ buttons and menu actions will be enabled. You can choose any operation to apply to your source image.
 
 Some other functionalities include:
 - You can __Export__ your source or your output image
@@ -56,6 +56,8 @@ Some other functionalities include:
 - You can __Clear__ your source image, this will trigger the clear output functionality as well
 - You can __Clear__ your output image
 - You can __Undo__ or __Redo__ your operations to the output image
+
+---
 
 ### Issues Faced During Development
 Most of the issues faced during the implementation of the functionalities such as Conversion, Segmentation and Edge Detection. Incompatible source images caused the functions to break. By implementing try-except approach, the breakage of functions are prevented. 
