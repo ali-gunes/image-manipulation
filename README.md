@@ -1,4 +1,4 @@
-# Image Manipulator
+# Image Manipulation
  An image manipulation app with UI developed in Python and PyQt5 for my Object Oriented Programming II class
  
 
