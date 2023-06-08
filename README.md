@@ -13,15 +13,11 @@ You can open the documentation in any web browser with Javascript enabled by ope
 ### Prerequisites
 You need libraries listed down below to run.
 
--[PyQt5](https://pypi.org/project/PyQt5/)
-
--[qdarktheme](https://pyqtdarktheme.readthedocs.io/en/stable/)
-
--[NumPy](https://numpy.org/)
-
--[Scikit-Image](https://scikit-image.org/)
-
--[Matplotlib](https://matplotlib.org/)
+- [PyQt5](https://pypi.org/project/PyQt5/)
+- [qdarktheme](https://pyqtdarktheme.readthedocs.io/en/stable/)
+- [NumPy](https://numpy.org/)
+- [Scikit-Image](https://scikit-image.org/)
+- [Matplotlib](https://matplotlib.org/)
 
 ---
 
