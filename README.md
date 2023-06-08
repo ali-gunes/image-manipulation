@@ -10,6 +10,16 @@ You can open the documentation in any web browser with Javascript enabled by ope
 
 ---
 
+### Prerequisites
+You need libraries listed down below to run.
+-[PyQt5](https://pypi.org/project/PyQt5/)
+-[qdarktheme](https://pyqtdarktheme.readthedocs.io/en/stable/)
+-[NumPy](https://numpy.org/)
+-[Scikit-Image](https://scikit-image.org/)
+-[Matplotlib](https://matplotlib.org/)
+
+---
+
 ### Run & Configuration
 In the project, various libraries such as PyQt5, Scikit Image, NumPy, Matplotlib and like are used. To run the project as is, the virtual environment (venv) with all the libraries pre-installed attached in the current directory. 
 Simply open the current directory in any code editor (in modern editors the virtual environment will be detected automatically), choose the virtual environment as your interpreter and run the “MainUI.py” file. 
