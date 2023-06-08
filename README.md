@@ -14,7 +14,7 @@ You can open the documentation in any web browser with Javascript enabled by ope
 In the project, various libraries such as PyQt5, Scikit Image, NumPy, Matplotlib and like are used. To run the project as is, the virtual environment (venv) with all the libraries pre-installed attached in the current directory. 
 Simply open the current directory in any code editor (in modern editors the virtual environment will be detected automatically), choose the virtual environment as your interpreter and run the “MainUI.py” file. 
 
-Important: Please do not move or make any changes in the virtual environment. With Python 3.4+, the python interpreter’s path is hardcoded in the “activate.bat” file and making any changes with the virtual environment will result in undefined interpreter path. If something erroneous happens while trying to run, you can choose to create a new virtual environment and install the dependencies.
+__Important:__ Please do not move or make any changes in the virtual environment. With Python 3.4+, the python interpreter’s path is hardcoded in the “activate.bat” file and making any changes with the virtual environment will result in undefined interpreter path. If something erroneous happens while trying to run, you can choose to create a new virtual environment and install the dependencies.
 
 ---
 
@@ -49,5 +49,7 @@ These preferences can be changed anytime and however the user wants. Any changes
 
 ### Issues Faced During Development
 Most of the issues faced during the implementation of the functionalities such as Conversion, Segmentation and Edge Detection. Incompatible source images caused the functions to break. By implementing try-except approach, the breakage of functions are prevented. 
+
 Thanks to the Qt Designer, the design of the application went smoothly. Adding layouts for responsive application to appropriate places allowed flexible windows. 
+
 An important thing to note is; creating a flowchart and going through a comprehensive planning process, iterating and consistent work helped me to properly structure the project.
