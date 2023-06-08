@@ -1,6 +1,8 @@
 # Image Manipulation
  An image manipulation app with UI developed in Python and PyQt5 for my Object Oriented Programming II class
 
+![Main Window](./src/resources/img/MainWindow.png)
+
 --- 
 
 ### Documentation
