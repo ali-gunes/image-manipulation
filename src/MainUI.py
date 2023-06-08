@@ -879,7 +879,7 @@ class Ui_MainWindow(object):
             undoHistory.clear()
             redoHistory.clear()
 
-    # Open a dialog box to save the source with the opposite of source file's extension (jpg -> png, png -> jpg)
+    # Open a dialog box to save the source with the opposite of source file's extension (jpg -> png | png -> jpg)
     def exportViewers(self, exportType: str):
         try:
             saveFormat = "PNG Files (*.png)" if self.fileName[0][-3::] == "jpg" else "JPG Files (*.jpg)"
@@ -915,6 +915,10 @@ class Ui_MainWindow(object):
 
         elif viewerType == "output":
             self.outputImageViewer.clear()
+
+            # Clear Undo/Redo History
+            undoHistory.clear()
+            redoHistory.clear()
 
         # region Events for both conditions
         # Disable Undo/Redo Menu Actions and Buttons

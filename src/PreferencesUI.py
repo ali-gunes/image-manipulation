@@ -252,7 +252,7 @@ class Ui_PreferencesWindow(object):
 
         elif objectName == "alignBottom":
             MainWindow.addDockWidget(QtCore.Qt.DockWidgetArea.BottomDockWidgetArea, dynamicIsland)
-            # This one is different because of some weird glitch, Qt does not allow me to set an integer for the bottom area so I forced it with keywords
+            # This one is different because of some weird glitch, Qt does not allow me to set an integer for the bottom area so I forced it with a keyword
 
     # Lock the island's maximum size policies
     def lockIslands(self, lockType, dynamicIsland):
